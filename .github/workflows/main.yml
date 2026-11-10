@@ -1,0 +1,23 @@
+name: Restore and rename store file
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore store file as index.html
+        run: |
+          git config user.name "sherazmobilezone"
+          git config user.email "sherazmobilezone@users.noreply.github.com"
+          git rm -q index.html
+          git checkout 00a6b6a -- dp-mobiles.html
+          git mv dp-mobiles.html index.html
+          wc -c index.html
+          git status --short
+          git commit -m "Restore DP Mobiles store as index.html"
+          git push
